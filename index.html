@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<body onkeypress="onKeyPress(event)" onkeyup="onKeyUp(event)" ontouchstart="onKeyPress(event)" ontouchend="onKeyUp(event)">
+  <h1 id="main-title">Morse Code Translator</h1>
+  <p id="subtitle">Info: to use this application, please start typing any key on your keyboard.</p>
+<div id="container">
+  <h2>Morse Text:<h2/>
+  <h3 id="text"></h3>
+  <h2>Translated:<h2/>
+  <h1 id="translate-text"></h1>
+</div>
+
+<style>
+  body {
+    background-color: black;
+    height: 100%;
+    font-family: monospace;
+    border: 2px solid grey;
+    padding: 0 20px;
+  }
+  #container {
+    border: 2px dotted grey;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  #main-title {
+    border: 2px dotted lime;
+    padding: 10px;
+    text-align: center;
+  }
+  #subtitle {
+    border: 2px dotted grey;
+    padding: 10px;
+    text-align: center;
+  }
+  h1, h3 {
+    color: lime;
+    text-transform: uppercase;
+  }
+  h2, p {
+    color: white;
+  }
+</style>
+
+<script>
+var timePress = 0;
+var timeUp = 0;
+var morseText = "";
+var translateText = "";
+
+function onKeyPress(e) {
+  if (timePress !== 0 && e.timeStamp - timePress > 1200) {
+  	morseText += ' / ';
+  } else if (e.timeStamp - timePress > 600) {
+  	morseText += ' ';
+  }
+    timePress = e.timeStamp;
+}
+
+function onKeyUp(e) {
+  timeUp = e.timeStamp;
+  showTimeDiff();
+}
+
+function showTimeDiff() {
+	var currentText = "";
+	var diff = timeUp - timePress;
+    if (diff < 100) {
+    	morseText += '.';
+    } else {
+    	morseText += '-';
+    }
+    document.getElementById("text").innerHTML = morseText;
+    var morseTextArr = morseText.split(' ');
+    morseTextArr.map(function(el, index) {
+        currentText += morseConverter(el);
+    });
+    translateText = currentText;
+  	document.getElementById("translate-text").innerHTML = translateText;
+}
+
+function morseConverter(letter){
+ switch (letter){
+  case '.-':
+   return("a");
+   break;
+  case '-...':
+   return("b");
+   break;
+  case '-.-.':
+   return("c");
+   break;
+  case '-..':
+   return("d");
+   break;
+  case '.':
+   return("e");
+   break;
+  case '..-.':
+   return("f");
+   break;
+  case '--.':
+   return("g");
+   break;
+  case '....':
+   return("h");
+   break;
+  case '..':
+   return("i");
+   break;
+  case '.---':
+   return("j");
+   break;
+  case '-.-':
+   return("k");
+   break;
+  case '.-..':
+   return("l");
+   break;
+  case '--':
+   return("m");
+   break;
+  case '-.':
+   return("n");
+   break;
+  case '---':
+   return("o");
+   break;
+  case '.--.':
+   return("p");
+   break;
+  case '--.-':
+   return("q");
+   break;
+  case '.-.':
+   return("r");
+   break;
+  case '...':
+   return("s");
+   break;
+  case '-':
+   return("t");
+   break;
+  case '..-':
+   return("u");
+   break;
+  case '...-':
+   return("v");
+   break;
+  case '.--':
+   return("w");
+   break;
+  case '-..-':
+   return("x");
+   break;
+  case '-.--':
+   return("y");
+   break;
+  case '--..':
+   return("z");
+   break;
+  case '.----':
+   return("1");
+   break;
+  case '..---':
+   return("2");
+   break;
+  case '...--':
+   return("3");
+   break;
+  case '....-':
+   return("4");
+   break;
+  case '.....':
+   return("5");
+   break;
+  case '-....':
+   return("6");
+   break;
+  case '--...':
+   return("7");
+   break;
+  case '---..':
+   return("8");
+   break;
+  case '----.':
+   return("9");
+   break;
+  case '-----':
+   return("0");
+   break;
+  case ' ':
+   return(" ");
+   break;
+  case '/':
+   return("  ");
+   break;
+  case '.-.-.-':
+   return(".");
+   break;
+ }
+ return("");
+}
+</script>
+
+</body>
+</html>
+ 
